@@ -23,16 +23,27 @@
 
     document.querySelector('#order-form').addEventListener('submit', async event => {
       event.preventDefault();
+      const submitButton = event.currentTarget.querySelector('button[type="submit"]');
       const inputs = event.currentTarget.querySelectorAll('input');
       const draft = JSON.parse(localStorage.getItem('musaedDraft') || '{}');
       draft.orderName = inputs[0].value;
       draft.orderPhone = inputs[1].value;
       draft.orderApartment = inputs[2].value;
       draft.orderEndDate = inputs[3].value;
+      draft.paymentMethod = 'الدفع عند الاستلام';
+      draft.fullName = inputs[0].value;
+      draft.endDate = inputs[3].value;
       draft.createdAt = new Date().toLocaleString('ar-OM');
       localStorage.setItem('musaedDraft', JSON.stringify(draft));
-      await syncDraft(draft);
-      window.location.href = 'order-confirmation.html?step=1';
+      submitButton.disabled = true;
+      try {
+        await syncDraft(draft);
+        window.location.href = 'order-confirmation.html?step=1';
+      } catch (error) {
+        console.error('تعذر حفظ بيانات الطلب في Firebase:', error);
+        submitButton.disabled = false;
+        alert(`تعذر حفظ بيانات الطلب: ${error.message}`);
+      }
     });
   </script>
 </body>
