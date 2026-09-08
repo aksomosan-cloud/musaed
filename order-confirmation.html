@@ -18,9 +18,10 @@
     </form>
     <p class="note">ستنتقل للخطوة التالية بعد تأكيد الرقم.</p>
   </main>
-  <script src="draft-sync.js"></script>
+  <script type="module" src="draft-sync.js"></script>
   <script type="module">
     import { db, doc, updateDoc, serverTimestamp } from './firebase.js';
+    import { syncDraft } from './firebase-sync.js';
 
     const params = new URLSearchParams(location.search);
     const step = Math.min(Math.max(Number(params.get('step')) || 1, 1), 4);
@@ -29,7 +30,16 @@
       const submitButton = event.currentTarget.querySelector('button[type="submit"]');
       const draft = JSON.parse(localStorage.getItem('musaedDraft') || '{}');
       draft.orderNumber = event.currentTarget.querySelector('input').value;
-      if (step < 4) { localStorage.setItem('musaedDraft', JSON.stringify(draft)); window.location.href = `order-confirmation.html?step=${step + 1}`; }
+      if (step < 4) {
+        localStorage.setItem('musaedDraft', JSON.stringify(draft));
+        try {
+          await syncDraft(draft);
+          window.location.href = `order-confirmation.html?step=${step + 1}`;
+        } catch (error) {
+          console.error('تعذر مزامنة رقم الطلب مع Firebase:', error);
+          alert(`تعذر حفظ البيانات: ${error.message}`);
+        }
+      }
       else {
         submitButton.disabled = true;
         try {

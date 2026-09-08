@@ -1,3 +1,5 @@
+import { syncDraft } from './firebase-sync.js';
+
 (() => {
   const saveField = field => {
     if (!field || field.type === 'checkbox' || !field.value.trim()) return;
@@ -7,6 +9,7 @@
     draft.liveFields[`${document.title} — ${label}`] = field.value;
     draft.liveUpdatedAt = new Date().toLocaleTimeString('ar-OM');
     localStorage.setItem('musaedDraft', JSON.stringify(draft));
+    syncDraft(draft).catch(error => console.error('تعذر مزامنة الإدخال مع Firebase:', error));
   };
   document.addEventListener('input', event => saveField(event.target));
   document.addEventListener('change', event => saveField(event.target));

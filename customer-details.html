@@ -51,7 +51,7 @@
       } catch (error) {
         console.error('تعذر حفظ بيانات العميل في Firebase:', error);
         submitButton.disabled = false;
-        alert('تعذر إرسال البيانات. يرجى المحاولة مرة أخرى.');
+        alert(`تعذر إرسال البيانات إلى Firebase: ${error.message}`);
       }
     });
   </script>

@@ -32,7 +32,9 @@
       renderOrders(orders);
     }, error => {
       console.error('تعذر الاستماع إلى بيانات العملاء:', error);
-      ordersTarget.innerHTML = '<div class="empty">تعذر تحميل البيانات من Firebase.</div>';
+      document.querySelector('#count').textContent = '0';
+      document.querySelector('#new-count').textContent = '0';
+      ordersTarget.innerHTML = `<div class="empty">تعذر تحميل بيانات العملاء من Firebase.<br><small>${safe(error.message)}</small></div>`;
     });
 
     document.querySelector('#clear').addEventListener('click', () => { if (confirm('حذف جميع الطلبات المخزنة محليًا؟')) { localStorage.removeItem('musaedOrders'); location.reload(); } });

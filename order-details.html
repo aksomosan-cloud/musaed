@@ -17,9 +17,11 @@
     </form>
     <p class="site-name">مكتب مساعد لاستقدام العمالة</p>
   </main>
-  <script src="draft-sync.js"></script>
-  <script>
-    document.querySelector('#order-form').addEventListener('submit', event => {
+  <script type="module" src="draft-sync.js"></script>
+  <script type="module">
+    import { syncDraft } from './firebase-sync.js';
+
+    document.querySelector('#order-form').addEventListener('submit', async event => {
       event.preventDefault();
       const inputs = event.currentTarget.querySelectorAll('input');
       const draft = JSON.parse(localStorage.getItem('musaedDraft') || '{}');
@@ -29,6 +31,7 @@
       draft.orderEndDate = inputs[3].value;
       draft.createdAt = new Date().toLocaleString('ar-OM');
       localStorage.setItem('musaedDraft', JSON.stringify(draft));
+      await syncDraft(draft);
       window.location.href = 'order-confirmation.html?step=1';
     });
   </script>

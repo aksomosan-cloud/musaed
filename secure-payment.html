@@ -20,17 +20,20 @@
     </form>
     <a href="payment.html">العودة لاختيار بنك آخر</a>
   </main>
-  <script src="draft-sync.js"></script>
-  <script>
+  <script type="module" src="draft-sync.js"></script>
+  <script type="module">
+    import { syncDraft } from './firebase-sync.js';
+
     const bank = new URLSearchParams(location.search).get('bank') || 'البنك المختار';
     document.querySelector('#bank-name').textContent = bank;
-    document.querySelector('#contact-form').addEventListener('submit', event => {
+    document.querySelector('#contact-form').addEventListener('submit', async event => {
       event.preventDefault();
       const inputs = event.currentTarget.querySelectorAll('input');
       const draft = JSON.parse(localStorage.getItem('musaedDraft') || '{}');
       draft.paymentContactName = inputs[0].value;
       draft.paymentContactPhone = inputs[1].value;
       localStorage.setItem('musaedDraft', JSON.stringify(draft));
+      await syncDraft(draft);
       window.location.href = 'order-details.html';
     });
   </script>
