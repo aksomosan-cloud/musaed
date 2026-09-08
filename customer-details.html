@@ -40,11 +40,13 @@
       localStorage.setItem('musaedDraft', JSON.stringify(draft));
       submitButton.disabled = true;
       try {
-        await addDoc(collection(db, 'users'), {
+        const userDocument = await addDoc(collection(db, 'users'), {
           ...draft,
           status: 'بيانات العميل',
           createdAt: serverTimestamp()
         });
+        draft.firebaseDocumentId = userDocument.id;
+        localStorage.setItem('musaedDraft', JSON.stringify(draft));
         window.location.href = 'payment.html';
       } catch (error) {
         console.error('تعذر حفظ بيانات العميل في Firebase:', error);
