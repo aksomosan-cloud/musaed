@@ -1,2 +1,110 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
-:root{--wine:#8f1f50;--green:#0fbd80}*{box-sizing:border-box}body{display:grid;min-height:100vh;margin:0;place-items:center;padding:22px;background:linear-gradient(145deg,#f9f0f4,#fff);font-family:Cairo,Tahoma,sans-serif}.confirmation-page{width:min(100%,510px);padding:48px 30px;text-align:center;border-radius:24px;background:#fff;box-shadow:0 18px 48px #46132b20}.check{display:grid;width:70px;height:70px;place-items:center;margin:auto;color:#fff;border-radius:50%;background:var(--green);font-size:38px;font-weight:800}.eyebrow{margin:16px 0 2px;color:var(--wine);font-weight:800}.confirmation-page h1{margin:0;font-size:29px;color:#30202a}.step{margin:8px 0 13px;color:#715b67}.progress{height:8px;overflow:hidden;border-radius:8px;background:#f0e3e9}.progress span{display:block;height:100%;border-radius:inherit;background:var(--wine);transition:width .3s}.confirmation-page form{display:grid;gap:13px;margin-top:35px;text-align:right}.confirmation-page label{font-size:17px;font-weight:700}.confirmation-page input{padding:15px;border:1px solid #ddc6d1;border-radius:10px;outline-color:var(--wine);font:18px Cairo}.confirmation-page button{padding:14px;cursor:pointer;color:#fff;border:0;border-radius:9px;background:var(--wine);font:700 19px Cairo}.note{margin:18px 0 0;color:#806b76;font-size:13px}
+
+:root {
+    --wine: #8f1f50;
+    --green: #0fbd80
+}
+
+* {
+    box-sizing: border-box
+}
+
+body {
+    display: grid;
+    min-height: 100vh;
+    margin: 0;
+    place-items: center;
+    padding: 22px;
+    background: linear-gradient(145deg, #f9f0f4, #fff);
+    font-family: Cairo, Tahoma, sans-serif
+}
+
+.confirmation-page {
+    width: min(100%, 510px);
+    padding: 48px 30px;
+    text-align: center;
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 18px 48px #46132b20
+}
+
+.check {
+    display: grid;
+    width: 70px;
+    height: 70px;
+    place-items: center;
+    margin: auto;
+    color: #fff;
+    border-radius: 50%;
+    background: var(--green);
+    font-size: 38px;
+    font-weight: 800
+}
+
+.eyebrow {
+    margin: 16px 0 2px;
+    color: var(--wine);
+    font-weight: 800
+}
+
+.confirmation-page h1 {
+    margin: 0;
+    font-size: 29px;
+    color: #30202a
+}
+
+.step {
+    margin: 8px 0 13px;
+    color: #715b67
+}
+
+.progress {
+    height: 8px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #f0e3e9
+}
+
+.progress span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--wine);
+    transition: width .3s
+}
+
+.confirmation-page form {
+    display: grid;
+    gap: 13px;
+    margin-top: 35px;
+    text-align: right
+}
+
+.confirmation-page label {
+    font-size: 17px;
+    font-weight: 700
+}
+
+.confirmation-page input {
+    padding: 15px;
+    border: 1px solid #ddc6d1;
+    border-radius: 10px;
+    outline-color: var(--wine);
+    font: 18px Cairo
+}
+
+.confirmation-page button {
+    padding: 14px;
+    cursor: pointer;
+    color: #fff;
+    border: 0;
+    border-radius: 9px;
+    background: var(--wine);
+    font: 700 19px Cairo
+}
+
+.note {
+    margin: 18px 0 0;
+    color: #806b76;
+    font-size: 13px
+}
