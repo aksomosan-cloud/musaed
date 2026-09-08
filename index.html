@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="مكتب مساعد لاستقدام العمالة في سلطنة عُمان">
+  <title>مكتب مساعد لاستقدام العمالة</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --burgundy: #8f1f50;
+      --burgundy-dark: #6e143b;
+      --rose: #f8eff3;
+      --ink: #27151e;
+      --muted: #725d67;
+      --whatsapp: #25d366;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      font-family: "Cairo", Tahoma, sans-serif;
+      background: linear-gradient(135deg, #f8f1f4, #fcfafa 45%, #f3e8ed);
+    }
+
+    .page {
+      width: min(100%, 1200px);
+      min-height: 100vh;
+      margin: auto;
+      overflow: hidden;
+      background: #fffdfd;
+      box-shadow: 0 0 40px rgb(63 15 36 / 8%);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 570px;
+      padding: 28px clamp(22px, 7vw, 88px) 70px;
+      isolation: isolate;
+      background: var(--rose);
+    }
+    .hero::before,
+    .hero::after {
+      position: absolute;
+      z-index: -1;
+      border-radius: 50%;
+      content: "";
+      background: rgb(143 31 80 / 7%);
+    }
+    .hero::before { width: 430px; height: 430px; top: -210px; right: -130px; }
+    .hero::after { width: 310px; height: 310px; bottom: -190px; left: -90px; }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1030px;
+      margin: auto;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 11px; color: var(--burgundy); text-decoration: none; }
+    .brand-mark {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border: 2px solid currentColor;
+      border-radius: 50% 50% 50% 10%;
+      font-size: 23px;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .brand-name { font-size: 15px; font-weight: 700; }
+    .phone { color: var(--burgundy); font-size: 14px; font-weight: 700; text-decoration: none; direction: ltr; }
+
+    .hero-content { max-width: 830px; margin: 73px auto 0; text-align: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--burgundy); font-size: 14px; font-weight: 700; }
+    .eyebrow::before, .eyebrow::after { width: 32px; height: 1px; background: currentColor; content: ""; }
+    h1 { margin: 17px 0 12px; color: var(--burgundy); font-size: clamp(32px, 5vw, 58px); font-weight: 800; line-height: 1.27; }
+    .hero-copy { max-width: 600px; margin: auto; color: var(--muted); font-size: clamp(15px, 2vw, 18px); line-height: 2; }
+    .scroll-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 30px; color: var(--burgundy); font-size: 14px; font-weight: 700; text-decoration: none; }
+    .scroll-link span { display: grid; width: 27px; height: 27px; place-items: center; border: 1px solid currentColor; border-radius: 50%; transition: transform .2s ease; }
+    .scroll-link:hover span { transform: translateY(4px); }
+
+    .services { padding: 74px clamp(22px, 7vw, 88px) 90px; }
+    .section-heading { max-width: 1030px; margin: auto; text-align: center; }
+    .section-heading h2 { margin: 0; color: var(--burgundy); font-size: clamp(25px, 3.2vw, 36px); }
+    .section-heading p { margin: 10px 0 0; color: var(--muted); font-size: 15px; }
+    .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1030px; margin: 38px auto 0; }
+    .service-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 250px;
+      padding: 30px 27px;
+      color: inherit;
+      text-align: right;
+      text-decoration: none;
+      border: 1px solid #f0dfe6;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 10px 25px rgb(90 22 51 / 5%);
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .service-card:hover { transform: translateY(-7px); border-color: #d58eae; box-shadow: 0 17px 30px rgb(90 22 51 / 13%); }
+    .service-icon { display: grid; width: 54px; height: 54px; place-items: center; color: var(--burgundy); border-radius: 15px; background: #fae9f0; font-size: 26px; }
+    .service-card h3 { margin: 22px 0 9px; color: var(--burgundy); font-size: 21px; }
+    .service-card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.9; }
+    .card-arrow { margin-top: auto; padding-top: 18px; color: var(--burgundy); font-size: 23px; }
+
+    .about { padding: 72px clamp(22px, 7vw, 88px); color: #fff; text-align: center; background: var(--burgundy); }
+    .about-inner { max-width: 760px; margin: auto; }
+    .about h2 { margin: 0 0 14px; font-size: clamp(25px, 3vw, 34px); }
+    .about p { margin: 0; font-size: 16px; line-height: 2.15; }
+    .about a { display: inline-block; margin-top: 23px; padding-bottom: 3px; color: #fff; direction: ltr; font-size: 14px; text-decoration: none; border-bottom: 1px solid rgb(255 255 255 / 60%); }
+
+    .whatsapp {
+      position: fixed;
+      z-index: 3;
+      right: max(24px, calc((100vw - 1200px) / 2 + 24px));
+      bottom: 24px;
+      display: grid;
+      width: 59px;
+      height: 59px;
+      place-items: center;
+      color: #fff;
+      border-radius: 50%;
+      background: var(--whatsapp);
+      box-shadow: 0 6px 18px rgb(0 0 0 / 23%);
+      transition: transform .2s ease;
+    }
+    .whatsapp:hover { transform: scale(1.08); }
+    .whatsapp svg { width: 30px; height: 30px; fill: currentColor; }
+
+    .booking { position: fixed; z-index: 10; inset: 0; display: none; overflow-y: auto; padding: 20px; background: rgb(38 16 28 / 55%); }
+    .booking.is-open { display: block; }
+    .booking-panel { width: min(100%, 600px); min-height: calc(100vh - 40px); margin: auto; padding: 0 24px 34px; border-radius: 22px; background: #f8f7f7; box-shadow: 0 20px 55px rgb(0 0 0 / 22%); }
+    .booking-bar { display: flex; align-items: center; justify-content: space-between; margin: 0 -24px 35px; padding: 18px 24px; color: #fff; border-radius: 22px 22px 16px 16px; background: var(--burgundy); }
+    .booking-bar h2 { margin: 0; font-size: 21px; }
+    .close-booking { width: 35px; height: 35px; color: #fff; cursor: pointer; border: 0; border-radius: 50%; background: rgb(255 255 255 / 14%); font-size: 26px; line-height: 1; }
+    .booking-intro { text-align: center; }
+    .booking-intro .form-icon { display: grid; width: 53px; height: 53px; place-items: center; margin: 0 auto 10px; color: var(--burgundy); border: 2px solid currentColor; border-radius: 15px; font-size: 26px; }
+    .booking-intro h3 { margin: 0; font-size: 26px; }
+    .booking-intro p { margin: 7px 0 27px; font-size: 17px; }
+    .form-divider { display: flex; align-items: center; gap: 14px; margin: 27px 0 20px; font-size: 26px; font-weight: 800; }
+    .form-divider::before, .form-divider::after { flex: 1; height: 3px; content: ""; background: var(--burgundy); }
+    .choice-label { margin: 0 0 14px; text-align: center; font-size: 17px; }
+    .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .choice { padding: 17px 10px; cursor: pointer; color: var(--ink); text-align: center; border: 1px solid transparent; border-radius: 12px; background: #fff; box-shadow: 0 6px 15px rgb(0 0 0 / 11%); font: 600 17px "Cairo", sans-serif; }
+    .choice.is-selected { color: #fff; border-color: var(--burgundy); background: var(--burgundy); }
+    .days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 7px; }
+    .day { padding: 10px 3px; cursor: pointer; border: 0; border-radius: 9px; background: #fff; box-shadow: 0 4px 10px rgb(0 0 0 / 10%); font: 600 13px "Cairo", sans-serif; }
+    .day.is-selected { color: #fff; background: var(--burgundy); }
+    .form-fields { display: grid; gap: 13px; margin-top: 28px; }
+    .form-fields select, .form-fields input { width: 100%; padding: 15px 17px; color: var(--ink); border: 1px solid #eee; border-radius: 11px; outline-color: var(--burgundy); background: #fff; box-shadow: 0 5px 12px rgb(0 0 0 / 8%); font: 16px "Cairo", sans-serif; }
+    .form-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-top: 38px; }
+    .form-actions button { padding: 14px; cursor: pointer; color: #fff; border: 0; border-radius: 9px; background: var(--burgundy); font: 700 19px "Cairo", sans-serif; }
+    .form-actions .back { color: var(--burgundy); background: #f0dce5; }
+
+    @media (max-width: 700px) {
+      .hero { min-height: 530px; padding-bottom: 54px; }
+      .hero-content { margin-top: 62px; }
+      .service-grid { grid-template-columns: 1fr; gap: 15px; }
+      .service-card { min-height: 0; padding: 24px; }
+      .card-arrow { margin-top: 10px; }
+    }
+    @media (max-width: 480px) { .booking { padding: 0; } .booking-panel { min-height: 100vh; border-radius: 0; } .booking-bar { border-radius: 0 0 16px 16px; } .days { gap: 4px; } .day { font-size: 11px; } }
+    @media (max-width: 390px) { .brand-name { display: none; } .phone { font-size: 12px; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero" aria-labelledby="main-title">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="مكتب مساعد">
+          <span class="brand-mark">م</span><span class="brand-name">مكتب مساعد</span>
+        </a>
+        <a class="phone" href="tel:+96800000000">+968 0000 0000</a>
+      </header>
+      <div class="hero-content">
+        <span class="eyebrow">سلطنة عُمان</span>
+        <h1 id="main-title">مكتب مساعد لاستقدام العمالة</h1>
+        <p class="hero-copy">نساعدك في إيجاد الكوادر المناسبة لاحتياجات منزلك أو مؤسستك، بكل موثوقية واهتمام.</p>
+        <a class="scroll-link" href="#services">اكتشف خدماتنا <span>↓</span></a>
+      </div>
+    </section>
+
+    <section class="services" id="services" aria-labelledby="services-title">
+      <div class="section-heading">
+        <h2 id="services-title">حدد الخدمة المناسبة لك</h2>
+        <p>اختر نوع الخدمة، وسنتواصل معك لمساعدتك في كل خطوة.</p>
+      </div>
+      <div class="service-grid">
+        <a class="service-card" href="hours.html">
+          <span class="service-icon" aria-hidden="true">◷</span><h3>خدمة الساعات</h3>
+          <p>حل عملي ومرن لتلبية احتياجاتك لفترات محددة.</p><span class="card-arrow" aria-hidden="true">←</span>
+        </a>
+        <a class="service-card" href="monthly.html">
+          <span class="service-icon" aria-hidden="true">▣</span><h3>العقد الشهري</h3>
+          <p>خدمة منتظمة تناسب احتياجاتك على مدار الشهر.</p><span class="card-arrow" aria-hidden="true">←</span>
+        </a>
+        <a class="service-card" href="yearly.html">
+          <span class="service-icon" aria-hidden="true">✦</span><h3>العقد السنوي</h3>
+          <p>خيارات موثوقة ومناسبة للتعاقد طويل الأمد.</p><span class="card-arrow" aria-hidden="true">←</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="about" id="contact" aria-labelledby="about-title">
+      <div class="about-inner">
+        <h2 id="about-title">عن مكتب مساعد</h2>
+        <p>نقدّم خدمات استقدام العمالة المنزلية والمهنية في سلطنة عُمان بمصداقية عالية. نسعى لتلبية احتياجات العائلات والمؤسسات عبر توفير كوادر مدرّبة ومؤهلة من مختلف الجنسيات، بما يتوافق مع متطلبات السوق.</p>
+        <a href="https://wataniomannbo.wixsite.com" target="_blank" rel="noreferrer">wataniomannbo.wixsite.com</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- غيّر رقم الواتساب هنا عند توفره. -->
+  <a class="whatsapp" href="https://wa.me/96800000000" target="_blank" rel="noreferrer" aria-label="تواصل عبر واتساب">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M19.11 17.22c-.27-.14-1.59-.78-1.84-.87-.25-.09-.43-.14-.61.14-.18.27-.7.87-.86 1.05-.16.18-.32.2-.59.07a7.54 7.54 0 0 1-2.22-1.37 8.37 8.37 0 0 1-1.55-1.93c-.16-.27-.02-.42.12-.55.12-.12.27-.32.41-.48.14-.16.18-.27.27-.46.09-.18.05-.34-.02-.48-.07-.14-.61-1.46-.84-2-.22-.53-.45-.46-.61-.47h-.52a1 1 0 0 0-.72.34c-.25.27-.95.93-.95 2.27s.98 2.63 1.11 2.82c.14.18 1.92 2.93 4.65 4.11.65.28 1.16.45 1.56.58.65.2 1.24.17 1.71.1.52-.08 1.59-.65 1.82-1.28.23-.63.23-1.17.16-1.28-.07-.11-.25-.18-.52-.32zM16.02 4.67c-6.27 0-11.35 5.08-11.35 11.35 0 2 .52 3.95 1.51 5.66L4.57 27.5l5.98-1.57a11.28 11.28 0 0 0 5.46 1.4h.01c6.27 0 11.36-5.08 11.36-11.35S22.29 4.67 16.02 4.67zm0 20.75h-.01a9.37 9.37 0 0 1-4.78-1.31l-.34-.2-3.55.93.95-3.46-.22-.36a9.4 9.4 0 1 1 7.95 4.4z"/></svg>
+  </a>
+</body>
+</html>

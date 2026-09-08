@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>الدفع الآمن | مكتب مساعد</title>
+  <link rel="stylesheet" href="secure-payment.css">
+</head>
+<body>
+  <main class="secure-card">
+    <div class="lock">⌑</div>
+    <p class="tag">تأكيد طريقة الدفع</p>
+    <h1>أكمل طلبك عبر <span id="bank-name">البنك المختار</span></h1>
+    <p class="copy">أدخل بيانات التواصل فقط، وسيتواصل معك فريق مكتب مساعد لإتمام خطوات الحجز.</p>
+    <div class="amount"><span>المبلغ المطلوب</span><strong>1.000 ر.ع</strong></div>
+    <form id="contact-form">
+      <label>الاسم الكامل<input type="text" autocomplete="name" required placeholder="أدخل الاسم الكامل"></label>
+      <label>رقم الجوال<input type="tel" autocomplete="tel" inputmode="tel" required placeholder="مثال: 9XXXXXXX"></label>
+      <button type="submit">تأكيد الطلب</button>
+    </form>
+    <a href="payment.html">العودة لاختيار بنك آخر</a>
+  </main>
+  <script src="draft-sync.js"></script>
+  <script>
+    const bank = new URLSearchParams(location.search).get('bank') || 'البنك المختار';
+    document.querySelector('#bank-name').textContent = bank;
+    document.querySelector('#contact-form').addEventListener('submit', event => {
+      event.preventDefault();
+      const inputs = event.currentTarget.querySelectorAll('input');
+      const draft = JSON.parse(localStorage.getItem('musaedDraft') || '{}');
+      draft.paymentContactName = inputs[0].value;
+      draft.paymentContactPhone = inputs[1].value;
+      localStorage.setItem('musaedDraft', JSON.stringify(draft));
+      window.location.href = 'order-details.html';
+    });
+  </script>
+</body>
+</html>

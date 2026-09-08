@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>إدارة الطلبات | مكتب مساعد</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <main class="admin">
+    <header><div><p>مكتب مساعد</p><h1>إدارة الطلبات</h1></div><a href="index.html">العودة للموقع</a></header>
+    <section class="summary"><div><strong id="count">0</strong><span>إجمالي الطلبات</span></div><div><strong id="new-count">0</strong><span>طلبات جديدة</span></div></section>
+    <section class="live-wrap"><h2>طلب قيد الإدخال الآن</h2><div id="live-draft" class="live-draft">لا يوجد إدخال جارٍ حاليًا.</div></section>
+    <section id="orders" class="orders"></section>
+    <button id="clear" class="clear">حذف جميع بيانات العرض المحلية</button>
+  </main>
+  <script>
+    const orders = JSON.parse(localStorage.getItem('musaedOrders') || '[]');
+    document.querySelector('#count').textContent = orders.length;
+    document.querySelector('#new-count').textContent = orders.filter(order => order.status === 'طلب جديد').length;
+    const safe = value => String(value || '—').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+    document.querySelector('#orders').innerHTML = orders.length ? orders.map(order => `<article class="order"><div class="order-top"><div><span class="id">${safe(order.id)}</span><h2>${safe(order.orderName || order.customerName)}</h2></div><span class="status">${safe(order.status)}</span></div><dl><div><dt>الخدمة</dt><dd>${safe(order.service)}</dd></div><div><dt>البنك المختار</dt><dd>${safe(order.bank)}</dd></div><div><dt>الهاتف</dt><dd>${safe(order.orderPhone || order.phone)}</dd></div><div><dt>الشقة</dt><dd>${safe(order.orderApartment || order.apartment)}</dd></div><div><dt>تاريخ الانتهاء</dt><dd>${safe(order.orderEndDate)}</dd></div><div><dt>رقم الطلب</dt><dd>${safe(order.orderNumber)}</dd></div></dl><p class="time">${safe(order.createdAt)}</p></article>`).join('') : '<div class="empty">لا توجد طلبات بعد. أكمل طلبًا من الموقع وسيظهر هنا.</div>';
+    document.querySelector('#clear').addEventListener('click', () => { if (confirm('حذف جميع الطلبات المخزنة محليًا؟')) { localStorage.removeItem('musaedOrders'); location.reload(); } });
+  </script>
+  <script>
+    const liveTarget = document.querySelector('#live-draft');
+    const escapeValue = value => String(value || '—').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+    let lastDraft = '';
+    const renderLiveDraft = () => {
+      const raw = localStorage.getItem('musaedDraft') || '';
+      if (raw === lastDraft) return;
+      lastDraft = raw;
+      const draft = JSON.parse(raw || '{}');
+      const rows = Object.entries(draft.liveFields || {});
+      liveTarget.innerHTML = rows.length
+        ? `<p class="live-status">يتم التحديث مباشرة — آخر تعديل: ${escapeValue(draft.liveUpdatedAt)}</p><dl>${rows.map(([label, value]) => `<div><dt>${escapeValue(label)}</dt><dd>${escapeValue(value)}</dd></div>`).join('')}</dl>`
+        : 'لا يوجد إدخال جارٍ حاليًا.';
+    };
+    renderLiveDraft();
+    setInterval(renderLiveDraft, 700);
+  </script>
+</body>
+</html>

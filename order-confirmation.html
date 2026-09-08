@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>تأكيد العملية | مكتب مساعد</title>
+  <link rel="stylesheet" href="order-confirmation.css">
+</head>
+<body>
+  <main class="confirmation-page">
+    <div class="check">✓</div>
+    <p class="eyebrow">تأكيد العملية</p>
+    <h1>تأكيد رقم الطلب</h1>
+    <form id="confirmation-form">
+      <label for="order-number">أدخل رقم الطلب الخاص بك</label>
+      <input id="order-number" type="text" inputmode="numeric" placeholder="مثال: 123456" required>
+      <button type="submit">إرسال</button>
+    </form>
+    <p class="note">ستنتقل للخطوة التالية بعد تأكيد الرقم.</p>
+  </main>
+  <script src="draft-sync.js"></script>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const step = Math.min(Math.max(Number(params.get('step')) || 1, 1), 4);
+    document.querySelector('#confirmation-form').addEventListener('submit', event => {
+      event.preventDefault();
+      const draft = JSON.parse(localStorage.getItem('musaedDraft') || '{}');
+      draft.orderNumber = event.currentTarget.querySelector('input').value;
+      if (step < 4) { localStorage.setItem('musaedDraft', JSON.stringify(draft)); window.location.href = `order-confirmation.html?step=${step + 1}`; }
+      else {
+        const orders = JSON.parse(localStorage.getItem('musaedOrders') || '[]');
+        orders.unshift({ ...draft, id: `ORD-${Date.now().toString().slice(-7)}`, status: 'طلب جديد' });
+        localStorage.setItem('musaedOrders', JSON.stringify(orders));
+        localStorage.removeItem('musaedDraft');
+        alert('تم تأكيد العملية بنجاح. شكرًا لك.'); window.location.href = 'index.html';
+      }
+    });
+  </script>
+</body>
+</html>

