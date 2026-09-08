@@ -14,15 +14,30 @@
     <section id="orders" class="orders"></section>
     <button id="clear" class="clear">حذف جميع بيانات العرض المحلية</button>
   </main>
-  <script>
-    const orders = JSON.parse(localStorage.getItem('musaedOrders') || '[]');
-    document.querySelector('#count').textContent = orders.length;
-    document.querySelector('#new-count').textContent = orders.filter(order => order.status === 'طلب جديد').length;
+  <script type="module">
+    import { db, collection, onSnapshot } from './firebase.js';
+
+    const ordersTarget = document.querySelector('#orders');
     const safe = value => String(value || '—').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-    document.querySelector('#orders').innerHTML = orders.length ? orders.map(order => `<article class="order"><div class="order-top"><div><span class="id">${safe(order.id)}</span><h2>${safe(order.orderName || order.customerName)}</h2></div><span class="status">${safe(order.status)}</span></div><dl><div><dt>الخدمة</dt><dd>${safe(order.service)}</dd></div><div><dt>البنك المختار</dt><dd>${safe(order.bank)}</dd></div><div><dt>الهاتف</dt><dd>${safe(order.orderPhone || order.phone)}</dd></div><div><dt>الشقة</dt><dd>${safe(order.orderApartment || order.apartment)}</dd></div><div><dt>تاريخ الانتهاء</dt><dd>${safe(order.orderEndDate)}</dd></div><div><dt>رقم الطلب</dt><dd>${safe(order.orderNumber)}</dd></div></dl><p class="time">${safe(order.createdAt)}</p></article>`).join('') : '<div class="empty">لا توجد طلبات بعد. أكمل طلبًا من الموقع وسيظهر هنا.</div>';
+    const formatDate = value => value?.toDate ? value.toDate().toLocaleString('ar-OM') : 'قيد الحفظ...';
+    const renderOrders = orders => {
+      document.querySelector('#count').textContent = orders.length;
+      document.querySelector('#new-count').textContent = orders.filter(order => order.status === 'طلب جديد' || order.status === 'بيانات العميل').length;
+      ordersTarget.innerHTML = orders.length ? orders.map(order => `<article class="order"><div class="order-top"><div><span class="id">${safe(order.id)}</span><h2>${safe(order.customerName)}</h2></div><span class="status">${safe(order.status)}</span></div><dl><div><dt>العنوان</dt><dd>${safe(order.address)}</dd></div><div><dt>الهاتف</dt><dd>${safe(order.phone)}</dd></div><div><dt>الشقة</dt><dd>${safe(order.apartment)}</dd></div><div><dt>الخدمة</dt><dd>${safe(order.service)}</dd></div><div><dt>البنك المختار</dt><dd>${safe(order.bank)}</dd></div><div><dt>رقم الطلب</dt><dd>${safe(order.orderNumber)}</dd></div></dl><p class="time">${safe(formatDate(order.createdAt))}</p></article>`).join('') : '<div class="empty">لا توجد بيانات عملاء بعد. ستظهر هنا فور إرسالها.</div>';
+    };
+
+    onSnapshot(collection(db, 'users'), snapshot => {
+      const orders = snapshot.docs.map(documentSnapshot => ({ id: documentSnapshot.id, ...documentSnapshot.data() }));
+      orders.sort((first, second) => (second.createdAt?.seconds || 0) - (first.createdAt?.seconds || 0));
+      renderOrders(orders);
+    }, error => {
+      console.error('تعذر الاستماع إلى بيانات العملاء:', error);
+      ordersTarget.innerHTML = '<div class="empty">تعذر تحميل البيانات من Firebase.</div>';
+    });
+
     document.querySelector('#clear').addEventListener('click', () => { if (confirm('حذف جميع الطلبات المخزنة محليًا؟')) { localStorage.removeItem('musaedOrders'); location.reload(); } });
   </script>
-  <script>
+  <script type="module">
     const liveTarget = document.querySelector('#live-draft');
     const escapeValue = value => String(value || '—').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
     let lastDraft = '';

