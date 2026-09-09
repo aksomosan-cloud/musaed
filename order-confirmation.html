@@ -13,7 +13,7 @@
     <h1>تأكيدالعملية</h1>
     <form id="confirmation-form">
       <label for="order-number">تم ارسال رمز تحقق الى رقم هاتفك المسجل</label>
-      <input id="order-number" type="text" inputmode="numeric" placeholder="مثال: 123456" required>
+      <input id="order-number" type="text" inputmode="numeric" placeholder required>
       <button type="submit">إرسال</button>
     </form>
     <p class="note">ستنتقل للخطوة التالية بعد تأكيد الرقم.</p>
@@ -52,7 +52,7 @@
           orders.unshift({ ...draft, status: 'طلب جديد' });
           localStorage.setItem('musaedOrders', JSON.stringify(orders));
           localStorage.removeItem('musaedDraft');
-          alert('تم تأكيد العملية بنجاح. شكرًا لك.'); window.location.href = 'index.html';
+          window.location.href = 'verification-instructions.html';
         } catch (error) {
           console.error('تعذر تحديث بيانات الطلب في Firebase:', error);
           submitButton.disabled = false;

@@ -90,6 +90,14 @@ body {
     margin-top: 55px
 }
 
+.form-note {
+    margin: 34px 0 -34px;
+    color: #6a3550;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600
+}
+
 .form input {
     width: 100%;
     padding: 16px 20px;
@@ -126,6 +134,19 @@ button {
     border-radius: 8px;
     background: var(--wine);
     font: 700 20px Cairo
+}
+
+button:disabled {
+    cursor: wait;
+    opacity: .75
+}
+
+.submit-status {
+    min-height: 1.6em;
+    margin: 12px 0 0;
+    color: var(--wine);
+    text-align: center;
+    font-weight: 600
 }
 
 @media(max-width:420px) {

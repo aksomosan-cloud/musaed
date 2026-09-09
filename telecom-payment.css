@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+
+:root { --wine: #8f1f50; --green: #0fbd80; }
+* { box-sizing: border-box; }
+body {
+  display: grid;
+  min-height: 100vh;
+  margin: 0;
+  place-items: center;
+  padding: 22px;
+  background: linear-gradient(145deg, #f9f2f5, #eef8f4);
+  font-family: Cairo, Tahoma, sans-serif;
+}
+.telecom-card {
+  width: min(100%, 510px);
+  padding: 46px 30px;
+  color: #35212b;
+  text-align: center;
+  border-radius: 25px;
+  background: #fff;
+  box-shadow: 0 18px 48px #42102722;
+}
+.phone-icon {
+  display: grid;
+  width: 68px;
+  height: 68px;
+  place-items: center;
+  margin: auto;
+  color: #fff;
+  border-radius: 50%;
+  background: var(--green);
+  font-size: 38px;
+  font-weight: 800;
+}
+.tag { margin: 14px 0 5px; color: var(--green); font-weight: 800; }
+h1 { margin: 0; font-size: 25px; line-height: 1.65; }
+.copy { margin: 13px 0 27px; color: #715d67; line-height: 2; }
+form { display: grid; gap: 13px; text-align: right; }
+label { display: grid; gap: 6px; color: #604955; font-size: 14px; font-weight: 700; }
+input, select {
+  width: 100%;
+  padding: 13px;
+  color: #35212b;
+  border: 1px solid #decbd4;
+  border-radius: 9px;
+  outline-color: var(--wine);
+  background: #fff;
+  font: 16px Cairo, Tahoma, sans-serif;
+}
+button {
+  width: 100%;
+  margin-top: 8px;
+  padding: 15px;
+  cursor: pointer;
+  color: #fff;
+  border: 0;
+  border-radius: 10px;
+  background: var(--wine);
+  font: 700 17px Cairo, Tahoma, sans-serif;
+}
+button:disabled { cursor: wait; opacity: .7; }
+a { display: inline-block; margin-top: 19px; color: var(--wine); text-decoration: none; font-size: 14px; }

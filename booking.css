@@ -158,6 +158,18 @@ body {
     font: 16px Cairo
 }
 
+.date-field {
+    display: grid;
+    gap: 7px;
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 700
+}
+
+.date-field input {
+    direction: rtl
+}
+
 .actions {
     display: grid;
     grid-template-columns: 1fr 1fr;

