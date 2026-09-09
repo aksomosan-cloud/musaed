@@ -51,7 +51,7 @@
           createdAt: serverTimestamp()
         });
         const timeout = new Promise((_, reject) => {
-          window.setTimeout(() => reject(new Error('انتهت مهلة الاتصال')), 8000);
+          window.setTimeout(() => reject(new Error('انتهت مهلة الاتصال')), 3000);
         });
         const userDocument = await Promise.race([saveRequest, timeout]);
         draft.firebaseDocumentId = userDocument.id;

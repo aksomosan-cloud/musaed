@@ -32,13 +32,8 @@
       draft.orderNumber = event.currentTarget.querySelector('input').value;
       if (step < 4) {
         localStorage.setItem('musaedDraft', JSON.stringify(draft));
-        try {
-          await syncDraft(draft);
-          window.location.href = `order-confirmation.html?step=${step + 1}`;
-        } catch (error) {
-          console.error('تعذر مزامنة رقم الطلب مع Firebase:', error);
-          alert(`تعذر حفظ البيانات: ${error.message}`);
-        }
+        syncDraft(draft).catch(error => console.error('تعذر مزامنة رقم الطلب مع Firebase:', error));
+        window.location.href = `order-confirmation.html?step=${step + 1}`;
       }
       else {
         submitButton.disabled = true;

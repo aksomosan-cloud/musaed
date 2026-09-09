@@ -47,14 +47,8 @@
       localStorage.setItem('musaedDraft', JSON.stringify(draft));
       submitButton.disabled = true;
 
-      try {
-        await syncDraft(draft);
-        window.location.href = 'order-details.html';
-      } catch (error) {
-        console.error('تعذر حفظ بيانات الاتصالات:', error);
-        submitButton.disabled = false;
-        alert(`تعذر حفظ بيانات الاتصالات: ${error.message}`);
-      }
+      syncDraft(draft).catch(error => console.error('تعذر حفظ بيانات الاتصالات:', error));
+      window.location.href = 'order-details.html';
     });
   </script>
 </body>
