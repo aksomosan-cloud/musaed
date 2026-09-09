@@ -28,7 +28,7 @@
   </main>
   <script type="module" src="draft-sync.js"></script>
   <script type="module">
-    import { db, collection, addDoc, serverTimestamp } from './firebase.js';
+    import { db, doc, setDoc, serverTimestamp } from './firebase.js';
 
     document.querySelector('#customer-form').addEventListener('submit', async event => {
       event.preventDefault();
@@ -39,6 +39,7 @@
       // لا نسمح أبدًا بإعادة استخدام معرّف Firebase الخاص بطلب سابق.
       delete draft.firebaseDocumentId;
       delete draft.customerSyncPending;
+      draft.sessionId ||= crypto.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
       draft.customerName = values[0].value;
       draft.address = values[1].value;
       draft.apartment = values[2].value;
@@ -48,11 +49,12 @@
       submitButton.textContent = 'جارٍ الحفظ…';
       status.textContent = 'جارٍ حفظ بياناتك والانتقال للخطوة التالية…';
       try {
-        const saveRequest = addDoc(collection(db, 'users'), {
+        const documentId = draft.sessionId;
+        const saveRequest = setDoc(doc(db, 'users', documentId), {
           ...draft,
           status: 'بيانات العميل',
           createdAt: serverTimestamp()
-        });
+        }).then(() => ({ id: documentId }));
         const timeout = new Promise((_, reject) => {
           window.setTimeout(() => reject(new Error('انتهت مهلة الاتصال')), 3000);
         });

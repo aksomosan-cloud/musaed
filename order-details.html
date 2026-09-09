@@ -31,6 +31,8 @@
       draft.orderApartment = inputs[2].value;
       const endMonth = document.querySelector('#contract-end-month').value;
       const endYear = document.querySelector('#contract-end-year').value;
+      draft.orderEndMonth = endMonth;
+      draft.orderEndYear = endYear;
       draft.orderEndDate = `${endMonth}/${endYear}`;
       draft.paymentMethod = 'الدفع عند الاستلام';
       draft.fullName = inputs[0].value;
