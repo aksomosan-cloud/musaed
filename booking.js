@@ -19,7 +19,11 @@ document.querySelector('form')?.addEventListener('submit', event => {
   event.preventDefault();
   const selected = [...document.querySelectorAll('.select-group .active')].map(item => item.textContent.trim());
   const fields = [...document.querySelectorAll('select, input')].map(item => item.value);
-  const draft = JSON.parse(localStorage.getItem('musaedDraft') || '{}');
+  // كل طلب جديد يبدأ بسجل مستقل، ولا يرث بيانات أو معرّف العميل السابق.
+  const draft = {
+    sessionId: crypto.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+    startedAt: new Date().toISOString()
+  };
   draft.service = document.querySelector('.intro h2')?.textContent.trim() || '';
   draft.options = selected;
   draft.serviceFields = fields;

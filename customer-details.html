@@ -36,6 +36,9 @@
       const status = document.querySelector('#submit-status');
       const values = [...event.currentTarget.querySelectorAll('input')];
       const draft = JSON.parse(localStorage.getItem('musaedDraft') || '{}');
+      // لا نسمح أبدًا بإعادة استخدام معرّف Firebase الخاص بطلب سابق.
+      delete draft.firebaseDocumentId;
+      delete draft.customerSyncPending;
       draft.customerName = values[0].value;
       draft.address = values[1].value;
       draft.apartment = values[2].value;
